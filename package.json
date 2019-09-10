@@ -3,6 +3,7 @@
 	"displayName": "Prometheus",
 	"description": "prometheus integration for vscode (WIP)",
 	"publisher": "slrtbtfs",
+	"license": "Apache 2.0",
 	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
 	"version": "0.0.1",
 	"engines": {
@@ -14,7 +15,8 @@
 		"Language Packs"
 	],
 	"activationEvents": [
-		"onCommand:extension.usePromQLLangServer"
+		"onCommand:extension.usePromQLLangServer",
+		"onLanguage:promql"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -22,6 +24,18 @@
 			{
 				"command": "extension.usePromQLLangServer",
 				"title": "Use PromQL Langserver for This File"
+			}
+		],
+		"languages": [
+			{
+				"id": "promql",
+				"extensions": [
+					".promql"
+				],
+				"aliases": [
+					"PromQL",
+					"promql"
+				]
 			}
 		]
 	},
@@ -31,6 +45,9 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile",
 		"test": "node ./out/test/runTest.js"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^5.2.1"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
