@@ -2,22 +2,26 @@
 	"name": "vscode-prometheus",
 	"displayName": "Prometheus",
 	"description": "prometheus integration for vscode (WIP)",
+	"publisher": "slrtbtfs",
+	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
 	"categories": [
-		"Other"
+		"Programming Languages",
+		"Linters",
+		"Language Packs"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.usePromQLLangServer"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.usePromQLLangServer",
+				"title": "Use PromQL Langserver for This File"
 			}
 		]
 	},
