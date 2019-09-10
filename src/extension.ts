@@ -7,21 +7,11 @@ import { Server } from 'http';
 
 let client: lspclient.LanguageClient;
 
-
+// FIXME
 // tslint:disable-next-line: typedef
 export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Your extension "vscode-prometheus" is now active!');
-
-	// The command has been defined in the package.json file
-	// The commandId parameter must match the command field in package.json
-	let disposable: lspclient.Disposable =
-		vscode.commands.registerCommand('extension.usePromQLLangServer', () => {
-			vscode.window.showInformationMessage('Not implemented yet :(');
-		});
-
-	context.subscriptions.push(disposable);
-
 
 	let serverExec: lspclient.Executable = {
 		command: context.asAbsolutePath(path.join('path', 'to', 'langserver')),
@@ -48,16 +38,22 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	client = new lspclient.LanguageClient(
-    'promql-lsp-client',
-    'PromQL Language Server',
-    serverOptions,
-    clientOptions
-  );
+		'promql-lsp-client',
+		'PromQL Language Server',
+		serverOptions,
+		clientOptions
+	);
 
-  client.start();
+	client.start();
 
 }
 
 
+// FIXME
 // tslint:disable-next-line: typedef
-export function deactivate() { }
+export function deactivate() {
+	if (!client) {
+		return undefined;
+	}
+	return client.stop();
+}

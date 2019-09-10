@@ -15,16 +15,11 @@
 		"Language Packs"
 	],
 	"activationEvents": [
-		"onCommand:extension.usePromQLLangServer",
 		"onLanguage:promql"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "extension.usePromQLLangServer",
-				"title": "Use PromQL Langserver for This File"
-			}
 		],
 		"languages": [
 			{
