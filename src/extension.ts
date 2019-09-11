@@ -14,14 +14,16 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Your extension "vscode-prometheus" is now active!');
 
 	let serverExec: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join('path', 'to', 'langserver')),
+		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-lsp")),
 		args: []
 	};
+	console.log("Server Path:" + serverExec.command);
 	// Only used when extension is launched in debug mode
 
 	let serverExecDebug: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join('path', 'to', 'langserver')),
-		args: ['--verbose']
+		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-lsp")),
+		args: ['--verbose'],
+		
 	};
 
 	let serverOptions: lspclient.ServerOptions = {
