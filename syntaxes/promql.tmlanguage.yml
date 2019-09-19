@@ -1,0 +1,41 @@
+scopeName: source.promql
+fileTypes: 
+  - source.promql
+patterns:
+  - name: keyword.operator.binary.arithmetic.promql
+    match: '(\+|-|\*|/|%|\^)'
+  - name: keyword.operator.binary.set.promql
+    match: '\b(and|or|unless)\b'
+  - name: keyword.operator.aggregator.promql'
+    match: '(sum|min|max|avg|stddev|stdvar|count|count_values|bottomk|topk|quantile)'
+  - name: keyword.operator.keyword.selector.promql
+    match: '(by|without|offset|on|ignoring|group_left|group_right|bool)'
+  - name: string.quoted.double.promql
+    match: '"(\\.|[^\\"])*"'
+  - name: string.quoted.single.promql
+    match: "'(\\\\.|[^\\\\'])*'"
+  - name: string.quoted.other.backticks.promql
+    begin: '`'
+    end: '`'
+  - name: support.function.promql
+    match: '\b(abs|absent|ceil|changes|clamp_(max|min)|day_of_(month|week)|day_in_month|delta|deriv|exp|floor|histogram_quantile|holt_winters|hour|idelta|increase|irate|label_(join|replace)|ln|log(2|10)|minute|month|predict_linear|rate|resets|round|scalar|sort|sort_desc|sqrt|time|timestamp|vector|year|(avg|min|max|sum|count|quantile|stddev|stdvar)_over_time)(?=\s*\()'
+  - name: constant.numeric.promql
+    match: '\b[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\b'
+  - name: constant.numeric.range.promql
+    match: '\[[1-9][0-9]*(s|m|h|d|w|y)(:[1-9][0-9]*(s|m|h|d|w|y))?\]'
+  - name: constant.numeric.offset.promql
+    match: '[1-9][0-9]*(s|m|h|d|w|y)'
+  - name: variable.parameter.label.promql
+    match: '[_a-zA-Z]+'
+  - name: punctuation.parentheses.begin.promql
+    match: '\('
+  - name: punctuation.parentheses.end.promql
+    match: '\)'
+  - name: keyword.operator.compare.promql
+    match: '(\=|!\=|\=~|!~)'
+  - name: punctuation.separator.promql
+    match: ','
+  - name: punctuation.braces.begin.promql
+    match: '\{'
+  - name: punctuation.braces.end.promql
+    match: '\}'
