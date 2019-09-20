@@ -3,7 +3,7 @@
 	"displayName": "Prometheus",
 	"description": "prometheus integration for vscode (WIP)",
 	"publisher": "slrtbtfs",
-	"license": "Apache 2.0",
+	"license": "Apache-2.0",
 	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
 	"version": "0.0.1",
 	"engines": {
@@ -41,10 +41,11 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
+		"compile-ts": "tsc -p ./",
+		"vscode:prepublish": "make",
+		"compile": "make",
 		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile",
+		"pretest": "make",
 		"test": "node ./out/test/runTest.js"
 	},
 	"dependencies": {
