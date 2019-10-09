@@ -10,18 +10,6 @@
 			"always"
 		],
 		"triple-equals": true,
-		"typedef": [
-			true,
-			"call-signature",
-			"arrow-call-signature",
-			"parameter",
-			"arrow-parameter",
-			"property-declaration",
-			"variable-declaration",
-			"member-variable-declaration",
-			"object-destructuring",
-			"array-destructuring"
-		],
 		"max-line-length": [true, 80]
 	},
 	"defaultSeverity": "warning"
