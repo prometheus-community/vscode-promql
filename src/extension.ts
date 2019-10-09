@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import * as lspclient from 'vscode-languageclient';
 import * as path from 'path';
+import * as webSocket from 'ws';
 import { Server } from 'http';
 
 let client: lspclient.LanguageClient;
@@ -13,17 +14,60 @@ export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Your extension "vscode-prometheus" is now active!');
 
+	const socketPort = 7000;
+	let socket = new webSocket(`webSocket://localhost:${socketPort}`);
+	
+	// The log to send
+	let log = '';
+	const websocketOutputChannel: vscode.OutputChannel = {
+		name: 'websocket',
+		// Only append the logs but send them later
+		append(value: string) {
+			log += value;
+			console.log(value);
+		},
+		appendLine(value: string) {
+			log += value;
+			// Don't send logs until WebSocket initialization
+			if (socket && socket.readyState === webSocket.OPEN) {
+				socket.send(log);
+			}
+			log = '';
+		},
+		clear() { },
+		show() { },
+		hide() { },
+		dispose() { }
+	};
+
+	const stderrOutputChannel: vscode.OutputChannel = {
+		name: 'websocket',
+		// Only append the logs but send them later
+		append(value: string) {
+			log += value;
+		},
+		appendLine(value: string) {
+			log += value;
+			console.error(log);
+			log = '';
+		},
+		clear() { },
+		show() { },
+		hide() { },
+		dispose() { }
+	};
+	
 	let serverExec: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-lsp")),
+		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
 		args: []
 	};
 	console.log("Server Path:" + serverExec.command);
 	// Only used when extension is launched in debug mode
 
 	let serverExecDebug: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-lsp")),
+		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
 		args: ['--verbose'],
-		
+
 	};
 
 	let serverOptions: lspclient.ServerOptions = {
@@ -35,8 +79,9 @@ export function activate(context: vscode.ExtensionContext) {
 		documentSelector: [{ scheme: 'file', language: 'promql' }],
 		synchronize: {
 			// This can be used as a config file later 
-			fileEvents: vscode.workspace.createFileSystemWatcher('**/.promql-lsp.json')
-		}
+			fileEvents: vscode.workspace.createFileSystemWatcher('**/.promql-lsp.json'),
+		},
+		outputChannel: stderrOutputChannel
 	};
 
 	client = new lspclient.LanguageClient(
