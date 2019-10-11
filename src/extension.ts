@@ -63,12 +63,10 @@ export function activate(context: vscode.ExtensionContext) {
 		args: []
 	};
 	console.log("Server Path:" + serverExec.command);
-	// Only used when extension is launched in debug mode
 
 	let serverExecDebug: lspclient.Executable = {
 		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
-		args: ['--verbose'],
-
+		args: []
 	};
 
 	let serverOptions: lspclient.ServerOptions = {
@@ -78,10 +76,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let clientOptions: lspclient.LanguageClientOptions = {
 		documentSelector: [{ scheme: 'file', language: 'promql' }],
-		synchronize: {
-			// This can be used as a config file later 
-			fileEvents: vscode.workspace.createFileSystemWatcher('**/.promql-lsp.json'),
-		},
 		outputChannel: websocketOutputChannel
 	};
 
@@ -97,8 +91,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 
-// FIXME
-// tslint:disable-next-line: typedef
 export function deactivate() {
 	if (!client) {
 		return undefined;
