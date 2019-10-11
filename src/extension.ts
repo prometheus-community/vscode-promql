@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const socketPort = 7000;
 	let socket = new webSocket(`webSocket://localhost:${socketPort}`);
-	
+
 	// The log to send
 	let log = '';
 	const websocketOutputChannel: vscode.OutputChannel = {
@@ -28,11 +28,12 @@ export function activate(context: vscode.ExtensionContext) {
 		},
 		appendLine(value: string) {
 			log += value;
-			// Don't send logs until WebSocket initialization
-			if (socket && socket.readyState === webSocket.OPEN) {
+
+			if (socket) {
+				while (socket.readyState !== socket.OPEN) { }
 				socket.send(log);
+				log = '';
 			}
-			log = '';
 		},
 		clear() { },
 		show() { },
@@ -56,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 		hide() { },
 		dispose() { }
 	};
-	
+
 	let serverExec: lspclient.Executable = {
 		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
 		args: []
@@ -81,7 +82,7 @@ export function activate(context: vscode.ExtensionContext) {
 			// This can be used as a config file later 
 			fileEvents: vscode.workspace.createFileSystemWatcher('**/.promql-lsp.json'),
 		},
-		outputChannel: stderrOutputChannel
+		outputChannel: websocketOutputChannel
 	};
 
 	client = new lspclient.LanguageClient(
