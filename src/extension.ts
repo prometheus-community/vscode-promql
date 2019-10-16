@@ -5,6 +5,7 @@ import * as lspclient from 'vscode-languageclient';
 import * as path from 'path';
 import * as webSocket from 'ws';
 import { Server } from 'http';
+import * as cp from 'child_process';
 
 let client: lspclient.LanguageClient;
 
@@ -14,49 +15,22 @@ export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Your extension "vscode-prometheus" is now active!');
 
-	const socketPort = 7000;
-	let socket = new webSocket(`webSocket://localhost:${socketPort}`);
-
-	// The log to send
 	let log = '';
-	const websocketOutputChannel: vscode.OutputChannel = {
-		name: 'websocket',
+	const stderrOutputChannel: vscode.OutputChannel = {
+		name: 'stderr',
 		// Only append the logs but send them later
 		append(value: string) {
-			log += value;
 			console.log(value);
 		},
 		appendLine(value: string) {
-			log += value;
-
-			if (socket) {
-				while (socket.readyState !== socket.OPEN) { }
-				socket.send(log);
-				log = '';
-			}
+			console.log(value);
 		},
 		clear() { },
 		show() { },
 		hide() { },
 		dispose() { }
 	};
-
-	const stderrOutputChannel: vscode.OutputChannel = {
-		name: 'websocket',
-		// Only append the logs but send them later
-		append(value: string) {
-			log += value;
-		},
-		appendLine(value: string) {
-			log += value;
-			console.error(log);
-			log = '';
-		},
-		clear() { },
-		show() { },
-		hide() { },
-		dispose() { }
-	};
+	console.log("Hi");
 
 	let serverExec: lspclient.Executable = {
 		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
@@ -65,8 +39,9 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log("Server Path:" + serverExec.command);
 
 	let serverExecDebug: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
-		args: []
+		command: "/bin/bash",
+		args: ["-c", "/home/slrtbtfs/git/github.com/slrtbtfs/promql-lsp/promql-langserver | tee /tmp/vscode.log"],
+		options: {}
 	};
 
 	let serverOptions: lspclient.ServerOptions = {
@@ -75,8 +50,10 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	let clientOptions: lspclient.LanguageClientOptions = {
-		documentSelector: [{ scheme: 'file', language: 'promql' }],
-		outputChannel: websocketOutputChannel
+		initializationOptions: {},
+		documentSelector: [{ scheme: 'file', language: 'promql' },
+		{ scheme: 'file', language: 'go' }],
+		outputChannel: stderrOutputChannel,
 	};
 
 	client = new lspclient.LanguageClient(
@@ -85,9 +62,8 @@ export function activate(context: vscode.ExtensionContext) {
 		serverOptions,
 		clientOptions
 	);
-
-	client.start();
-
+	let c = client.start();
+	context.subscriptions.push(c);
 }
 
 
@@ -97,3 +73,4 @@ export function deactivate() {
 	}
 	return client.stop();
 }
+
