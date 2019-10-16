@@ -11,7 +11,7 @@ let client: lspclient.LanguageClient;
 
 // FIXME
 // tslint:disable-next-line: typedef
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
 
 	console.log('Your extension "vscode-prometheus" is now active!');
 
@@ -39,8 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log("Server Path:" + serverExec.command);
 
 	let serverExecDebug: lspclient.Executable = {
-		command: "/bin/bash",
-		args: ["-c", "/home/slrtbtfs/git/github.com/slrtbtfs/promql-lsp/promql-langserver | tee /tmp/vscode.log"],
+		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
 		options: {}
 	};
 
