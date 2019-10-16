@@ -50,19 +50,20 @@
 	},
 	"dependencies": {
 		"@types/ws": "^6.0.3",
+		"supports-color": "^7.1.0",
 		"vscode-languageclient": "^5.2.1",
 		"ws": "^7.1.2"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.12.21",
-		"@types/vscode": "^1.38.0",
+		"@types/node": "^10.14.22",
+		"@types/vscode": "^1.39.0",
 		"glob": "^7.1.4",
 		"js-yaml": "^3.13.1",
-		"mocha": "^6.1.4",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
+		"mocha": "^6.2.1",
+		"tslint": "^5.20.0",
+		"typescript": "^3.6.4",
 		"vscode-test": "^1.0.2"
 	}
 }
