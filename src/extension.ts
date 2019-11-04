@@ -51,7 +51,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	let clientOptions: lspclient.LanguageClientOptions = {
 		initializationOptions: {},
 		documentSelector: [{ scheme: 'file', language: 'promql' },
-		{ scheme: 'file', language: 'go' }],
+		{ scheme: 'file', language: 'yaml' }],
 		outputChannel: stderrOutputChannel,
 	};
 

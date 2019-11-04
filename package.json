@@ -15,7 +15,8 @@
 		"Language Packs"
 	],
 	"activationEvents": [
-		"onLanguage:promql"
+		"onLanguage:promql",
+		"onLanguage:yaml"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
