@@ -1,0 +1,146 @@
+alerts:
+- alert: ErrorBudgetBurn
+  expr: |
+    (
+      status_class_5xx:http_requests_total:ratio_rate1h{job=""} > (14.4*0.001000)
+      and
+      status_class_5xx:http_requests_total:ratio_rate5m{job=""} > (14.4*0.001000)
+    )
+    or
+    (
+      status_class_5xx:http_requests_total:ratio_rate6h{job=""} > (6*0.001000)
+      and
+      status_class_5xx:http_requests_total:ratio_rate30m{job=""} > (6*0.001000)
+    )
+  labels:
+    job: ""
+    severity: critical
+- alert: ErrorBudgetBurn
+  expr: |
+    (
+      status_class_5xx:http_requests_total:ratio_rate1d{job=""} > (3*0.001000)
+      and
+      status_class_5xx:http_requests_total:ratio_rate2h{job=""} > (3*0.001000)
+    )
+    or
+    (
+      status_class_5xx:http_requests_total:ratio_rate3d{job=""} > (0.001000)
+      and
+      status_class_5xx:http_requests_total:ratio_rate6h{job=""} > (0.001000)
+    )
+  labels:
+    job: ""
+    severity: warning
+recordingrule:
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[5m]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate5m
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[30m]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate30m
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[1h]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate1h
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[2h]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate2h
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[6h]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate6h
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[1d]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate1d
+- expr: |
+    sum by (status_class) (
+      label_replace(
+        rate(http_requests_total{job=""}[3d]
+      ), "status_class", "${1}xx", "code", "([0-9])..")
+    )
+  labels:
+    job: ""
+  record: status_class:http_requests_total:rate3d
+- expr: |
+    sum(status_class:http_requests_total:rate5m{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate5m{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate5m
+- expr: |
+    sum(status_class:http_requests_total:rate30m{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate30m{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate30m
+- expr: |
+    sum(status_class:http_requests_total:rate1h{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate1h{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate1h
+- expr: |
+    sum(status_class:http_requests_total:rate2h{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate2h{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate2h
+- expr: |
+    sum(status_class:http_requests_total:rate6h{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate6h{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate6h
+- expr: |
+    sum(status_class:http_requests_total:rate1d{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate1d{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate1d
+- expr: |
+    sum(status_class:http_requests_total:rate3d{job="",status_class="5xx"})
+    /
+    sum(status_class:http_requests_total:rate3d{job=""})
+  labels:
+    job: ""
+  record: status_class_5xx:http_requests_total:ratio_rate3d
