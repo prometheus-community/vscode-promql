@@ -3,11 +3,13 @@
 import * as vscode from 'vscode';
 import * as lspclient from 'vscode-languageclient';
 import * as path from 'path';
-import * as webSocket from 'ws';
+import * as ws from 'ws';
 import { Server } from 'http';
 import * as cp from 'child_process';
 
 let client: lspclient.LanguageClient;
+
+let socket = new ws(`ws://localhost:7000`);
 
 // FIXME
 // tslint:disable-next-line: typedef
@@ -30,7 +32,34 @@ export async function activate(context: vscode.ExtensionContext) {
 		hide() { },
 		dispose() { }
 	};
-	console.log("Hi");
+
+	const websocketOutputChannel: vscode.OutputChannel = {
+		name: 'websocket',
+			// Only append the logs but send them later
+			append(value: string) {
+				value.split("\r\n").forEach(line => {
+					if (socket && socket.readyState === ws.OPEN) {
+						let err = socket.send(line);
+						console.log(line);
+						log = '';
+				}
+				});
+			},
+			appendLine(value: string) {
+				log += value;
+				// Don't send logs until WebSocket initialization
+				if (socket && socket.readyState === ws.OPEN) {
+					let err = socket.send(log);
+					console.log(log);
+					log = '';
+				}
+			},
+		clear() {},
+		show() {},
+		hide() {},
+		dispose() {}
+	};
+
 
 	let serverExec: lspclient.Executable = {
 		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
@@ -52,7 +81,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		initializationOptions: {},
 		documentSelector: [{ scheme: 'file', language: 'promql' },
 		{ scheme: 'file', language: 'yaml' }],
-		outputChannel: stderrOutputChannel,
+		outputChannel: websocketOutputChannel
 	};
 
 	client = new lspclient.LanguageClient(
@@ -67,6 +96,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 
 export function deactivate() {
+	socket.close();
 	if (!client) {
 		return undefined;
 	}
