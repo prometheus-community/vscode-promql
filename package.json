@@ -39,6 +39,24 @@
 				"scopeName": "source.promql",
 				"path": "./syntaxes/promql.tmlanguage.json"
 			}
+		],
+		"configuration": [
+			{
+				"title": "PromQL VS Code Extension",
+				"properties": {
+					"vscode-promql.langserverConfigPath": {
+						"type": "string",
+						"description": "Path to the PromQL langserver configuration",
+						"scope": "window"
+					},
+					"vscode-promql.langserverBinaryPath": {
+						"type": "string",
+						"default": "promql-langserver",
+						"description": "Path to the PromQL langserver binary",
+						"scope": "window"
+					}
+				}
+			}
 		]
 	},
 	"scripts": {

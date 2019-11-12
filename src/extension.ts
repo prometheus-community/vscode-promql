@@ -15,7 +15,15 @@ let socket = new ws(`ws://localhost:7000`);
 // tslint:disable-next-line: typedef
 export async function activate(context: vscode.ExtensionContext) {
 
+	let defaultConfig = path.join(context.extensionPath, 'promql-lsp.yaml');
 	console.log('Your extension "vscode-prometheus" is now active!');
+	let serverPath = vscode.workspace.getConfiguration('vscode-promql').get('langServerBinaryPath', 'promql-langserver');
+	let serverConfig = vscode.workspace.getConfiguration('vscode-promql').get('langServerConfigPath', defaultConfig);
+
+	console.log('Server Command: ', serverPath);
+	console.log('Server Config: ', serverConfig);
+
+
 
 	let log = '';
 	const stderrOutputChannel: vscode.OutputChannel = {
@@ -62,8 +70,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
 
 	let serverExec: lspclient.Executable = {
-		command: "promql-langserver",
-		args: []
+		command: serverPath,
+		args: ['--config-file', serverConfig]
 	};
 
 	let serverOptions: lspclient.ServerOptions = {
