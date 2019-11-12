@@ -62,19 +62,13 @@ export async function activate(context: vscode.ExtensionContext) {
 
 
 	let serverExec: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
+		command: "promql-langserver",
 		args: []
-	};
-	console.log("Server Path:" + serverExec.command);
-
-	let serverExecDebug: lspclient.Executable = {
-		command: context.asAbsolutePath(path.join("..", "promql-lsp", "promql-langserver")),
-		options: {}
 	};
 
 	let serverOptions: lspclient.ServerOptions = {
 		run: serverExec,
-		debug: serverExecDebug
+		debug: serverExec
 	};
 
 	let clientOptions: lspclient.LanguageClientOptions = {
