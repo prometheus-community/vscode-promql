@@ -45,21 +45,18 @@ export async function activate(context: vscode.ExtensionContext) {
 		name: 'websocket',
 			// Only append the logs but send them later
 			append(value: string) {
+				console.log(value);
 				value.split("\r\n").forEach(line => {
 					if (socket && socket.readyState === ws.OPEN) {
-						let err = socket.send(line);
-						console.log(line);
-						log = '';
+						socket.send(line);
 				}
 				});
 			},
 			appendLine(value: string) {
-				log += value;
+				console.log(value);
 				// Don't send logs until WebSocket initialization
 				if (socket && socket.readyState === ws.OPEN) {
-					let err = socket.send(log);
-					console.log(log);
-					log = '';
+					socket.send(value);
 				}
 			},
 		clear() {},
