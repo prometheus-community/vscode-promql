@@ -14,7 +14,7 @@ Prometheus Extension for VS Code based on the [PromQL Language Server](https://g
 ```
 3. Download the latest release binary from the releases page and install it with 
 ```
-code --install-extension vscode-prometheus-0.0.1.vsix
+code --install-extension vscode-prometheus-0.1.0.vsix
 ```
 4. Restart VS Code
 5. If you want to get metadata from a Prometheus server, set the `prometheus.url` setting in VS Code to the URL of the desired Prometheus.:
