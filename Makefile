@@ -1,5 +1,8 @@
 SYNTAXES = syntaxes/promql.tmlanguage.json
 
+package: webpack
+	vsce package
+
 webpack: ts
 	npm run webpack-production
 
