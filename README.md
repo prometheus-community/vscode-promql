@@ -1,5 +1,3 @@
-[![Build Status](https://cloud.drone.io/api/badges/slrtbtfs/vscode-prometheus/status.svg)](https://cloud.drone.io/slrtbtfs/vscode-prometheus)
-
 # vscode-prometheus
 
 Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/slrtbtfs/promql-lsp).
