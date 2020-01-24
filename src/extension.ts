@@ -17,8 +17,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	let defaultConfig = path.join(context.extensionPath, 'promql-lsp.yaml');
 	console.log('Your extension "vscode-prometheus" is now active!');
-	let serverPath = vscode.workspace.getConfiguration('vscode-promql').get('langServerBinaryPath', 'promql-langserver');
-	let serverConfig = vscode.workspace.getConfiguration('vscode-promql').get('langServerConfigPath', defaultConfig);
+	let serverPath = vscode.workspace.getConfiguration('prometheus').get('langserverBinaryPath', 'promql-langserver');
+	let serverConfig = vscode.workspace.getConfiguration('prometheus').get('langServerConfigPath', defaultConfig);
 
 	console.log('Server Command: ', serverPath);
 	console.log('Server Config: ', serverConfig);
@@ -80,6 +80,9 @@ export async function activate(context: vscode.ExtensionContext) {
 		initializationOptions: {},
 		documentSelector: [{ scheme: 'file', language: 'promql' },
 		{ scheme: 'file', language: 'yaml' }],
+		synchronize : {
+			configurationSection: 'prometheus'
+		},
 		outputChannel: websocketOutputChannel
 	};
 
@@ -90,6 +93,9 @@ export async function activate(context: vscode.ExtensionContext) {
 		clientOptions
 	);
 	let c = client.start();
+
+	
+
 	context.subscriptions.push(c);
 }
 

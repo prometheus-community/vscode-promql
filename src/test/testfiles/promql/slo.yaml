@@ -129,7 +129,7 @@ recordingrule:
     sum(status_class:http_requests_total:rate6h{job=""})
   labels:
     job: ""
-  record: status_class_5xx:http_requests_total:ratio_rate6h
+  record: status_class_5xx:http_requests_total:ratio_rate1d
 - expr: |
     sum(status_class:http_requests_total:rate1d{job="",status_class="5xx"})
     /

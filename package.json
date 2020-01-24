@@ -42,17 +42,23 @@
 		],
 		"configuration": [
 			{
-				"title": "PromQL VS Code Extension",
+				"title": "Prometheus",
 				"properties": {
-					"vscode-promql.langserverConfigPath": {
+					"prometheus.langserverConfigPath": {
 						"type": "string",
 						"description": "Path to the PromQL langserver configuration",
 						"scope": "window"
 					},
-					"vscode-promql.langserverBinaryPath": {
+					"prometheus.langserverBinaryPath": {
 						"type": "string",
 						"default": "promql-langserver",
 						"description": "Path to the PromQL langserver binary",
+						"scope": "window"
+					},
+					"prometheus.url": {
+						"type": "string",
+						"default": "localhost:9090",
+						"description": "URL of the Prometheus Server used for completions",
 						"scope": "window"
 					}
 				}
