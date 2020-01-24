@@ -1,1 +1,1 @@
-go_gc_duration_seconds{instance!="localhost:9090",job=} + ignoring() foo
+go_gc_duration_seconds{instance!="localhost:9090",job="alertmanager"} + ignoring() foo + absent_over_time(scrape_duration_seconds[4m])
