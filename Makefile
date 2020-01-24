@@ -1,6 +1,10 @@
 SYNTAXES = syntaxes/promql.tmlanguage.json
 
-all: typescript $(SYNTAXES)
+webpack: ts
+	npm run webpack-production
+
+.PHONY: ts
+ts: typescript $(SYNTAXES)
 
 
 typescript: $(wildcard src/**/*.ts) .node_deps

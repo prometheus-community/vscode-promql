@@ -18,7 +18,7 @@
 		"onLanguage:promql",
 		"onLanguage:yaml"
 	],
-	"main": "./out/extension.js",
+	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [],
 		"languages": [
@@ -67,11 +67,15 @@
 	},
 	"scripts": {
 		"compile-ts": "tsc -p ./",
-		"vscode:prepublish": "make",
 		"compile": "make",
 		"watch": "tsc -watch -p ./",
 		"pretest": "make",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"vscode:prepublish": "make",
+		"webpack": "webpack --mode development",
+		"webpack-production": "webpack --mode production",
+		"webpack-dev": "webpack --mode development --watch",
+		"test-compile": "tsc -p ./"
 	},
 	"dependencies": {
 		"@types/ws": "^6.0.4",
