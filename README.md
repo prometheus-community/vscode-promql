@@ -12,7 +12,7 @@ Prometheus Extension for VS Code based on the [PromQL Language Server](https://g
 1. First make sure to have the latest version of`go` installed.
 2. Install the latest version of the [PromQL Language Server](https://github.com/slrtbtfs/promql-lsp)
 ```
-    GO111MODULE=on go get -u github.com/slrtbtfs/promql-lsp/cmd/...
+    GO111MODULE=on go get github.com/slrtbtfs/promql-lsp/cmd/...
 ```
 3. Download the latest release binary from the releases page and install it with 
 ```
