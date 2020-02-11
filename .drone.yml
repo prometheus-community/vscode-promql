@@ -12,8 +12,11 @@ steps:
   - name: publish_github
     image: plugins/github-release
     settings:
-      - api_key:
-          - from_secret: github_token
-        files: *.vsix
+      api_key:
+        from_secret: github_token
+      files:
+        - '*.vsix'
+      checksum:
+        - sha512
     when:
-        event: tag
+      event: tag
