@@ -57,7 +57,7 @@
 					},
 					"prometheus.url": {
 						"type": "string",
-						"default": "localhost:9090",
+						"default": "http://localhost:9090",
 						"description": "URL of the Prometheus Server used for completions",
 						"scope": "window"
 					}
