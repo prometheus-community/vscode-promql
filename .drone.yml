@@ -12,8 +12,8 @@ steps:
   - name: publish_github
     image: plugins/github-release
     settings:
-        api_key:
-            from_secret: github_token
+      - api_key:
+          - from_secret: github_token
         files: *.vsix
     when:
         event: tag
