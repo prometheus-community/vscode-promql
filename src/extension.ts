@@ -20,14 +20,21 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	let defaultConfig = path.join(context.extensionPath, 'promql-lsp.yaml');
 	console.log('Your extension "vscode-prometheus" is now active!');
-	let serverPath = vscode.workspace.getConfiguration('prometheus').get('langserverBinaryPath', 'promql-langserver');
+	let serverPath = vscode.workspace.getConfiguration('prometheus').get('langserverBinaryPath', "");
 	let serverConfig = vscode.workspace.getConfiguration('prometheus').get('langServerConfigPath', defaultConfig);
+
+	if (serverPath === ""){
+		let downloadedLangserver =  langserverDownloadPath(context);
+		if (fs.existsSync(downloadedLangserver)){
+			serverPath =downloadedLangserver;
+		} else {
+			downloadLangserver(context, activate);
+			return;
+		}
+	}
 
 	console.log('Server Command: ', serverPath);
 	console.log('Server Config: ', serverConfig);
-
-	// TODO ask user
-	downloadLangserver(context);
 
 
 	const stderrOutputChannel: vscode.OutputChannel = {
@@ -47,26 +54,26 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	const websocketOutputChannel: vscode.OutputChannel = {
 		name: 'websocket',
-			// Only append the logs but send them later
-			append(value: string) {
-				console.log(value);
-				value.split("\r\n").forEach(line => {
-					if (socket && socket.readyState === ws.OPEN) {
-						socket.send(line);
-				}
-				});
-			},
-			appendLine(value: string) {
-				console.log(value);
-				// Don't send logs until WebSocket initialization
+		// Only append the logs but send them later
+		append(value: string) {
+			console.log(value);
+			value.split("\r\n").forEach(line => {
 				if (socket && socket.readyState === ws.OPEN) {
-					socket.send(value);
+					socket.send(line);
 				}
-			},
-		clear() {},
-		show() {},
-		hide() {},
-		dispose() {}
+			});
+		},
+		appendLine(value: string) {
+			console.log(value);
+			// Don't send logs until WebSocket initialization
+			if (socket && socket.readyState === ws.OPEN) {
+				socket.send(value);
+			}
+		},
+		clear() { },
+		show() { },
+		hide() { },
+		dispose() { }
 	};
 
 
@@ -84,7 +91,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		initializationOptions: {},
 		documentSelector: [{ scheme: 'file', language: 'promql' },
 		{ scheme: 'file', language: 'yaml' }],
-		synchronize : {
+		synchronize: {
 			configurationSection: 'prometheus'
 		},
 		outputChannel: websocketOutputChannel
@@ -101,69 +108,57 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(c);
 }
 
-export function downloadLangserver(context : vscode.ExtensionContext){
+// tslint:disable-next-line: max-line-length
+async function downloadLangserver(context: vscode.ExtensionContext, callback: any) {
+
 	// change this after every new langserver release
 	let langserverVersion = "v0.4.0";
 
 	let url = getReleaseURL(langserverVersion);
 
 	console.log(url);
-	let installPath = path.join(context.extensionPath, 'promql-langserver');
 
-	if (os.platform() === "win32"){
-		installPath += ".exe";
-	}
+	let installPath = langserverDownloadPath(context);
 
-	// TODO make executable
-	let fileStream = fs.createWriteStream(installPath);
-
-	
-
-	var data = '';
-
-	//fileStream.
+	let fileStream = fs.createWriteStream(installPath, {mode:0o755});
 
 	let extract = tar.extract();
 
 	// tslint:disable-next-line: max-line-length
 	// from https://stackoverflow.com/questions/19978452/how-to-extract-single-file-from-tar-gz-archive-using-node-js
 
-	extract.on('entry', function(header, stream, cb){
+	extract.on('entry', function (header, stream, cb) {
 		console.log('extracting');
-			let fileName = path.basename(header.name);
-			console.log(fileName);
-		stream.on('data', function(chunk){
-			if (fileName === 'promql-langserver' 
-			|| fileName === 'promql-langserver.exe'){
-				console.log("lol");
-				console.log(chunk);
+		let fileName = path.basename(header.name);
+		console.log(fileName);
+		stream.on('data', function (chunk) {
+			if (fileName === 'promql-langserver'
+				|| fileName === 'promql-langserver.exe') {
 				fileStream.write(chunk);
 			}
 		});
-		stream.on('end', function(){
+		stream.on('end', function () {
 			cb();
 		});
 		stream.on('finish', function () {
 			fileStream.close();
+			callback(context);
 		});
-		stream.on('error', function(err) { // Handle errors
+		stream.on('error', function (err) { // Handle errors
 			console.log(err);
 			cb();
 		});
 	});
 
-	redirects.https.get(url, function(response){
+	redirects.https.get(url, function (response) {
 		response
-		.pipe(zlib.createGunzip())
-		.pipe(extract);
+			.pipe(zlib.createGunzip())
+			.pipe(extract);
 	});
-
-	console.log('data');
-	console.log(data);
 }
 
 
-export function getReleaseURL(langserverVersion: string): string {
+function getReleaseURL(langserverVersion: string): string {
 	var platform: string = os.platform();
 
 	if (platform === "win32") {
@@ -190,6 +185,16 @@ export function getReleaseURL(langserverVersion: string): string {
 		+ "-"
 		+ arch
 		+ ".tar.gz";
+}
+
+function langserverDownloadPath(context: vscode.ExtensionContext): string {
+	let ret = path.join(context.extensionPath, 'promql-langserver');
+
+	if (os.platform() === "win32") {
+		ret += ".exe";
+	}
+
+	return ret;
 }
 
 export function deactivate() {
