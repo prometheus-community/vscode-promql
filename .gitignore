@@ -5,3 +5,4 @@ node_modules
 package.json.sha1sum
 .node_deps
 syntaxes/promql.tmlanguage.json
+dist
