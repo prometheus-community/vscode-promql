@@ -12,3 +12,4 @@ node_modules
 out/
 webpack.config.js
 .drone.yml
+promql-langserver*

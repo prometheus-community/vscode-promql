@@ -4,9 +4,8 @@ import * as lspclient from 'vscode-languageclient';
 import * as path from 'path';
 import * as ws from 'ws';
 import * as os from 'os';
-import * as https from 'https';
 import * as zlib from 'zlib';
-import * as tar from 'tar-stream';
+import * as tar from 'tar-fs';
 import * as fs from 'fs';
 import * as redirects from 'follow-redirects';
 
@@ -23,13 +22,13 @@ export async function activate(context: vscode.ExtensionContext) {
 	let serverPath = vscode.workspace.getConfiguration('prometheus').get('langserverBinaryPath', "");
 	let serverConfig = vscode.workspace.getConfiguration('prometheus').get('langServerConfigPath', defaultConfig);
 
-	if (serverPath === ""){
-		let downloadedLangserver =  langserverDownloadPath(context);
-		if (fs.existsSync(downloadedLangserver)){
-			serverPath =downloadedLangserver;
+	if (serverPath === "") {
+		let downloadedLangserver = langserverDownloadPath(context);
+		if (fs.existsSync(downloadedLangserver)) {
+			serverPath = downloadedLangserver;
 		} else {
-			downloadLangserver(context, activate);
-			return;
+			downloadLangserver(context);
+			serverPath = downloadedLangserver;
 		}
 	}
 
@@ -109,51 +108,24 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 // tslint:disable-next-line: max-line-length
-async function downloadLangserver(context: vscode.ExtensionContext, callback: any) {
+function downloadLangserver(context: vscode.ExtensionContext) {
 
 	// change this after every new langserver release
-	let langserverVersion = "v0.4.0";
+	let langserverVersion = "0.4.1";
 
 	let url = getReleaseURL(langserverVersion);
 
 	console.log(url);
 
-	let installPath = langserverDownloadPath(context);
+	let tarballPath = path.join(context.extensionPath, "promql-langserver.tar");
+	let installPath = path.join(context.extensionPath, "promql-langserver");
 
-	let fileStream = fs.createWriteStream(installPath, {mode:0o755});
-
-	let extract = tar.extract();
-
-	// tslint:disable-next-line: max-line-length
-	// from https://stackoverflow.com/questions/19978452/how-to-extract-single-file-from-tar-gz-archive-using-node-js
-
-	extract.on('entry', function (header, stream, cb) {
-		console.log('extracting');
-		let fileName = path.basename(header.name);
-		console.log(fileName);
-		stream.on('data', function (chunk) {
-			if (fileName === 'promql-langserver'
-				|| fileName === 'promql-langserver.exe') {
-				fileStream.write(chunk);
-			}
-		});
-		stream.on('end', function () {
-			cb();
-		});
-		stream.on('finish', function () {
-			fileStream.close();
-			callback(context);
-		});
-		stream.on('error', function (err) { // Handle errors
-			console.log(err);
-			cb();
-		});
-	});
+//	let tarballStream = fs.createWriteStream(tarballPath);
 
 	redirects.https.get(url, function (response) {
 		response
 			.pipe(zlib.createGunzip())
-			.pipe(extract);
+			.pipe(tar.extract(installPath));
 	});
 }
 
@@ -176,19 +148,19 @@ function getReleaseURL(langserverVersion: string): string {
 	}
 
 
-	return "https://github.com/slrtbtfs/promql-lsp/releases/download/"
+	return "https://github.com/prometheus-community/promql-langserver/releases/download/v"
 		+ langserverVersion
-		+ "/promql-langserver-"
+		+ "/promql-langserver_"
 		+ langserverVersion
-		+ "."
+		+ "_"
 		+ platform
-		+ "-"
+		+ "_"
 		+ arch
 		+ ".tar.gz";
 }
 
 function langserverDownloadPath(context: vscode.ExtensionContext): string {
-	let ret = path.join(context.extensionPath, 'promql-langserver');
+	let ret = path.join(context.extensionPath, 'promql-langserver', 'promql-langserver');
 
 	if (os.platform() === "win32") {
 		ret += ".exe";

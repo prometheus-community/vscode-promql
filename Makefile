@@ -1,6 +1,6 @@
 SYNTAXES = syntaxes/promql.tmlanguage.json
 
-package: webpack
+package: 
 	vsce package
 
 webpack: ts
