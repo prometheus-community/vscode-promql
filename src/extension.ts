@@ -27,8 +27,8 @@ export async function activate(context: vscode.ExtensionContext) {
 		if (fs.existsSync(downloadedLangserver)) {
 			serverPath = downloadedLangserver;
 		} else {
-			downloadLangserver(context);
-			serverPath = downloadedLangserver;
+			downloadLangserver(context, activate);
+			return;
 		}
 	}
 
@@ -108,24 +108,37 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 // tslint:disable-next-line: max-line-length
-function downloadLangserver(context: vscode.ExtensionContext) {
+function downloadLangserver(context: vscode.ExtensionContext, callback: any) {
 
 	// change this after every new langserver release
 	let langserverVersion = "0.4.1";
 
 	let url = getReleaseURL(langserverVersion);
 
-	console.log(url);
+	console.log("Downloading langserver from: " + url);
 
 	let tarballPath = path.join(context.extensionPath, "promql-langserver.tar");
 	let installPath = path.join(context.extensionPath, "promql-langserver");
 
-//	let tarballStream = fs.createWriteStream(tarballPath);
 
 	redirects.https.get(url, function (response) {
-		response
+		let stream = response
 			.pipe(zlib.createGunzip())
 			.pipe(tar.extract(installPath));
+
+		stream.on('finish', function () {
+			if (fs.existsSync(langserverDownloadPath(context))) {
+				console.log("Sucessfully downloaded langserver");
+				callback(context);
+			} else {
+				console.log("Failed to download langserver for unknown reason");
+			}
+		});
+
+		stream.on('error', function (err) {
+				console.log("Failed to download langserver:");
+			console.log(err);
+		})
 	});
 }
 
