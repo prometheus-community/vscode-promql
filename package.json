@@ -51,8 +51,8 @@
 					},
 					"prometheus.langserverBinaryPath": {
 						"type": "string",
-						"default": "promql-langserver",
-						"description": "Path to the PromQL langserver binary",
+						"default": "",
+						"description": "Path to the PromQL langserver binary. If none is provided, the latest release is dowloaded automatically.",
 						"scope": "window"
 					},
 					"prometheus.url": {
