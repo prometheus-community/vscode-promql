@@ -54,7 +54,7 @@
 					"promql.langserverBinaryPath": {
 						"type": "string",
 						"default": "",
-						"description": "Path to the PromQL langserver binary. Mainly useful for doing language server development.",
+						"description": "Path to the PromQL langserver binary. Mainly useful for doing language server development. If none is provided, the latest release is downloaded automatically.",
 						"scope": "window"
 					},
 					"promql.langserverConfigPath": {
