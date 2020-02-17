@@ -91,7 +91,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		documentSelector: [{ scheme: 'file', language: 'promql' },
 		{ scheme: 'file', language: 'yaml' }],
 		synchronize: {
-			configurationSection: 'prometheus'
+			configurationSection: 'promql'
 		},
 		outputChannel: websocketOutputChannel
 	};
