@@ -7,7 +7,7 @@ steps:
   - name: build
     image: node
     commands:
-      - npm install -g vsce
+      - yarn global add vsce
       - make
   - name: publish_github
     image: plugins/github-release
