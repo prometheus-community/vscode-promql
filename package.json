@@ -5,7 +5,7 @@
 	"publisher": "slrtbtfs",
 	"license": "Apache-2.0",
 	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
