@@ -42,23 +42,24 @@
 		],
 		"configuration": [
 			{
-				"title": "Prometheus",
+				"title": "PromQL",
 				"properties": {
-					"prometheus.langserverConfigPath": {
+					"promql.url": {
+						"title": "Prometheus Server URL",
 						"type": "string",
-						"description": "Path to the PromQL langserver configuration",
+						"default": "",
+						"description": "URL of the Prometheus Server used for completions and other metadata.\n\nNote that querying for metadata will put additional load on the Prometheus instance, so be careful with pointing this to production servers that already are under high load.\n\nExample: https://localhost:9090",
 						"scope": "window"
 					},
-					"prometheus.langserverBinaryPath": {
+					"promql.langserverBinaryPath": {
 						"type": "string",
-						"default": "promql-langserver",
-						"description": "Path to the PromQL langserver binary",
+						"default": "",
+						"description": "Path to the PromQL langserver binary. Mainly useful for doing language server development.",
 						"scope": "window"
 					},
-					"prometheus.url": {
+					"promql.langserverConfigPath": {
 						"type": "string",
-						"default": "http://localhost:9090",
-						"description": "URL of the Prometheus Server used for completions",
+						"description": "Path to the PromQL langserver configuration. Mainly useful for doing language server development.",
 						"scope": "window"
 					}
 				}
