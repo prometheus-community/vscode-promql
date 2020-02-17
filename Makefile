@@ -18,7 +18,7 @@ typescript: $(wildcard src/**/*.ts) .node_deps
 
 
 .node_deps: package.json.sha1sum
-	npm install
+	yarn install
 	touch .node_deps
 
 # Hack to only call npm install when package.json actually changes, see bug https://github.com/npm/npm/issues/17010
