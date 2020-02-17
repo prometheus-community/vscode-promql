@@ -1,7 +1,7 @@
 {
 	"name": "vscode-prometheus",
-	"displayName": "Prometheus",
-	"description": "prometheus integration for vscode (WIP)",
+	"displayName": "PromQL",
+	"description": "Prometheus and PromQL integration for VS Code",
 	"publisher": "slrtbtfs",
 	"license": "Apache-2.0",
 	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
