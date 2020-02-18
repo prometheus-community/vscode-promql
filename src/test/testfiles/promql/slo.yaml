@@ -37,7 +37,7 @@ recordingrule:
       label_replace(
         rate(http_requests_total{job=""}[5m]
       ), "status_class", "${1}xx", "code", "([0-9])..")
-    )
+    ) + abs(a)
   labels:
     job: ""
   record: status_class:http_requests_total:rate5m
