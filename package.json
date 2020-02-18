@@ -1,7 +1,7 @@
 {
-	"name": "vscode-prometheus",
-	"displayName": "PromQL",
-	"description": "Prometheus and PromQL integration for VS Code",
+	"name": "vscode-promql",
+	"displayName": "PromQL language support for VS Code",
+	"description": "Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/slrtbtfs/promql-lsp).",
 	"publisher": "slrtbtfs",
 	"license": "Apache-2.0",
 	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
