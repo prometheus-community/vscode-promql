@@ -30,7 +30,8 @@
 				"aliases": [
 					"PromQL",
 					"promql"
-				]
+				],
+				"configuration": "./promql-language-configuration.json"
 			}
 		],
 		"grammars": [
