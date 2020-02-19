@@ -3,8 +3,13 @@ SYNTAXES = syntaxes/promql.tmlanguage.json
 package: 
 	vsce package
 
+.PHONY: webpack-fast
 webpack: ts
 	npm run webpack-production
+
+.PHONY: webpack-fast
+webpack-fast: ts
+	npm run webpack-dev
 
 .PHONY: ts
 ts: typescript $(SYNTAXES)

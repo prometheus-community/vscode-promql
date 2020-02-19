@@ -84,8 +84,9 @@
 		"vscode:prepublish": "make webpack",
 		"webpack": "webpack --mode development",
 		"webpack-production": "webpack --mode production",
-		"webpack-dev": "webpack --mode development --watch",
-		"test-compile": "tsc -p ./"
+		"webpack-dev": "webpack --mode development",
+		"test-compile": "tsc -p ./",
+		"prerun": "make webpack-fast"
 	},
 	"dependencies": {
 		"@types/follow-redirects": "^1.8.0",
