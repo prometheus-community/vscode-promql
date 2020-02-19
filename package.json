@@ -1,10 +1,18 @@
 {
 	"name": "vscode-promql",
 	"displayName": "PromQL language support for VS Code",
-	"description": "Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/slrtbtfs/promql-lsp).",
-	"publisher": "slrtbtfs",
+	"description": "Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/redhat-developer/promql-lsp).",
+	"author": "Red Hat",
+	"publisher": "redhat",
+	"contributors": [
+		{
+			"email": "tguggenm@redhat.com",
+			"name": "Tobias Guggenmos"
+		}
+	],
+	"preview": true,
 	"license": "Apache-2.0",
-	"repository": "https://github.com/slrtbtfs/vscode-prometheus",
+	"repository": "https://github.com/redhat-developer/vscode-promql",
 	"version": "0.2.2",
 	"engines": {
 		"vscode": "^1.38.0"
