@@ -1,8 +1,8 @@
-[![Build Status](https://raster.shields.io/drone/build/slrtbtfs/vscode-prometheus.png)](https://cloud.drone.io/slrtbtfs/vscode-prometheus)
+[![Build Status](https://raster.shields.io/drone/build/redhat-developer/vscode-promql.png)](https://cloud.drone.io/redhat-developer/vscode-promql)
 
 # PromQL language support for VS Code
 
-Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/slrtbtfs/promql-lsp).
+Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/redhat-developer/promql-lsp).
 
 
 ## Trying out the extension
