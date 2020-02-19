@@ -2,7 +2,7 @@
 
 # PromQL language support for VS Code
 
-Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/redhat-developer/promql-lsp).
+Prometheus Extension for VS Code based on the [PromQL Language Server](https://github.com/prometheus-community/promql-langserver).
 
 
 ## Trying out the extension
