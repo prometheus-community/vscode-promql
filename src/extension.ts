@@ -111,7 +111,7 @@ export async function activate(context: vscode.ExtensionContext) {
 function downloadLangserver(context: vscode.ExtensionContext, callback: any) {
 
 	// change this after every new langserver release
-	let langserverVersion = "0.4.3";
+	let langserverVersion = "0.5.1";
 
 	let url = getReleaseURL(langserverVersion);
 
