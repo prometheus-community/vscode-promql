@@ -90,7 +90,7 @@
 	},
 	"dependencies": {
 		"@types/follow-redirects": "^1.8.0",
-		"@types/glob": "^7.1.2",
+		"@types/glob": "^7.1.3",
 		"@types/tar-fs": "^2.0.0",
 		"@types/ws": "^7.2.6",
 		"follow-redirects": "^1.12.1",
