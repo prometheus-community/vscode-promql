@@ -95,7 +95,7 @@
 		"@types/ws": "^7.4.2",
 		"follow-redirects": "^1.14.1",
 		"fs": "0.0.1-security",
-		"glob": "^7.1.6",
+		"glob": "^7.1.7",
 		"https": "^1.0.0",
 		"tar-fs": "^2.1.1",
 		"vscode-languageclient": "^6.1.3",
