@@ -104,7 +104,7 @@
 	},
 	"devDependencies": {
 		"@types/mocha": "^8.2.2",
-		"@types/node": "^15.6.1",
+		"@types/node": "^15.12.1",
 		"@types/vscode": "^1.38.0",
 		"mocha": "^8.4.0",
 		"ts-loader": "^9.2.2",
