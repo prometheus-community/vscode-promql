@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/vscode"
+    versions:
+    - "> 1.42.0"
+  - dependency-name: webpack
+    versions:
+    - 5.28.0
