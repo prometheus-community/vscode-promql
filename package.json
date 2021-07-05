@@ -92,7 +92,7 @@
 		"@types/follow-redirects": "^1.13.0",
 		"@types/glob": "^7.1.3",
 		"@types/tar-fs": "^2.0.0",
-		"@types/ws": "^7.4.5",
+		"@types/ws": "^7.4.6",
 		"follow-redirects": "^1.14.1",
 		"fs": "0.0.1-security",
 		"glob": "^7.1.7",
