@@ -35,7 +35,14 @@ export async function activate(context: vscode.ExtensionContext) {
 	console.log('Server Command: ', serverPath);
 	console.log('Server Config: ', serverConfig);
 
+	const openURLCommandHandler = (URL: string) => {
+		// This is a hack to avoid double encoding URL query params
+		// see https://github.com/microsoft/vscode/issues/85930#issuecomment-821882174
+		// @ts-ignore
+		vscode.env.openExternal(URL);
+	};
 
+	context.subscriptions.push(vscode.commands.registerCommand("vscode-promql.openURL", openURLCommandHandler))
 	const stderrOutputChannel: vscode.OutputChannel = {
 		name: 'stderr',
 		// Only append the logs but send them later
@@ -136,7 +143,7 @@ function downloadLangserver(context: vscode.ExtensionContext, callback: any) {
 		});
 
 		stream.on('error', function (err) {
-				console.log("Failed to download langserver:");
+			console.log("Failed to download langserver:");
 			console.log(err);
 		})
 	});
