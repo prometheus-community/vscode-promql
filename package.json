@@ -99,7 +99,7 @@
 		"https": "^1.0.0",
 		"tar-fs": "^2.1.1",
 		"vscode-languageclient": "^8.0.1",
-		"ws": "^8.6.0",
+		"ws": "^8.11.0",
 		"zlib": "^1.0.5"
 	},
 	"devDependencies": {
