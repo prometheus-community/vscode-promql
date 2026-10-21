@@ -1,28 +1,13 @@
 ###
-# This file is synced from https://github.com/prometheus/prometheus
+# Avoid syncing from prometheus/prometheus: no_prometheus_repo_sync
 ###
 version: 2
 updates:
-  - package-ecosystem: "gomod"
+  - package-ecosystem: "npm"
     directory: "/"
+    open-pull-requests-limit: 20
     schedule:
       interval: "monthly"
-    groups:
-      aws:
-        patterns:
-          - "github.com/aws/*"
-      go.opentelemetry.io:
-        patterns:
-          - "go.opentelemetry.io/*"
-      golang.org-x:
-        patterns:
-          - "golang.org/x/*"
-      k8s.io:
-        patterns:
-          - "k8s.io/*"
-      prometheus:
-        patterns:
-          - "github.com/prometheus/*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
