@@ -15,7 +15,7 @@
 	"repository": "https://github.com/redhat-developer/vscode-promql",
 	"version": "0.3.1",
 	"engines": {
-		"vscode": "^1.38.0"
+		"vscode": "^1.67.0"
 	},
 	"categories": [
 		"Programming Languages",
@@ -89,11 +89,11 @@
 		"prerun": "make webpack-fast"
 	},
 	"dependencies": {
-		"@types/follow-redirects": "^1.14.1",
+		"@types/follow-redirects": "^1.14.4",
 		"@types/glob": "^7.2.0",
 		"@types/tar-fs": "^2.0.1",
 		"@types/ws": "^8.5.3",
-		"follow-redirects": "^1.15.0",
+		"follow-redirects": "^1.16.1",
 		"fs": "0.0.1-security",
 		"glob": "^8.0.3",
 		"https": "^1.0.0",
@@ -105,14 +105,14 @@
 	"devDependencies": {
 		"@types/mocha": "^9.1.1",
 		"@types/node": "^18.0.3",
-		"@types/vscode": "^1.38.0",
-		"mocha": "^10.0.0",
-		"ts-loader": "^9.3.0",
+		"@types/vscode": "~1.67.0",
+		"mocha": "^12.0.3",
+		"ts-loader": "^9.6.2",
 		"tslint": "^6.1.3",
 		"typescript": "^4.6.4",
-		"vsce": "^2.7.0",
+		"vsce": "^2.15.0",
 		"vscode-test": "^1.6.1",
 		"webpack": "^5.72.1",
-		"webpack-cli": "^4.9.2"
+		"webpack-cli": "^5.1.4"
 	}
 }

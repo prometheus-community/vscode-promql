@@ -1,4 +1,4 @@
-[![Build Status](https://raster.shields.io/drone/build/redhat-developer/vscode-promql.png)](https://cloud.drone.io/redhat-developer/vscode-promql)
+[![Build Status](https://github.com/prometheus-community/vscode-promql/actions/workflows/ci.yml/badge.svg)](https://github.com/prometheus-community/vscode-promql/actions/workflows/ci.yml)
 
 # PromQL language support for VS Code
 
