@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import * as lspclient from 'vscode-languageclient';
+import * as lspclient from 'vscode-languageclient/node';
 import * as path from 'path';
 import * as ws from 'ws';
 import * as os from 'os';
@@ -52,6 +52,9 @@ export async function activate(context: vscode.ExtensionContext) {
 		appendLine(value: string) {
 			console.log(value);
 		},
+		replace(value: string) {
+			console.log(value);
+		},
 		clear() { },
 		show() { },
 		hide() { },
@@ -70,6 +73,13 @@ export async function activate(context: vscode.ExtensionContext) {
 			});
 		},
 		appendLine(value: string) {
+			console.log(value);
+			// Don't send logs until WebSocket initialization
+			if (socket && socket.readyState === ws.OPEN) {
+				socket.send(value);
+			}
+		},
+		replace(value: string) {
 			console.log(value);
 			// Don't send logs until WebSocket initialization
 			if (socket && socket.readyState === ws.OPEN) {
@@ -109,9 +119,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		serverOptions,
 		clientOptions
 	);
-	let c = client.start();
-
-	context.subscriptions.push(c);
+	await client.start();
 }
 
 // tslint:disable-next-line: max-line-length
